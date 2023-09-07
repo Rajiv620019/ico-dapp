@@ -24,13 +24,14 @@ contract MyToken {
         uint256 _value
     );
 
-    mapping(address => TokenHolderInfo) public tokenHolderInfo;
+    mapping(address => TokenHolderInfo) public tokenHolderInfos;
 
     struct TokenHolderInfo {
-        uint256 _tokenId;
-        address _from;
         address _to;
+        address _from;
         uint256 _totalToken;
+        uint256 _tokenId;
+
         bool _tokenHolder; // is token holder?
     }
 
@@ -42,5 +43,29 @@ contract MyToken {
         ownerOfContract = msg.sender;
         balanceOf[msg.sender] = _initialSupply;
         totalSupply = _initialSupply;
+    }
+
+    // Increase User Id
+    function inc () public {
+        _userId++;
+    }
+
+    // Transfer
+    function transfer(address _to, uint256 _value) public returns (bool success) {
+        require(balanceOf[msg.sender] >= _value, "Not enough balance");
+        inc ();
+
+        balanceOf[msg.sender] -= _value;
+        balanceOf[_to] += _value;
+
+        TokenHolderInfo storage tokenHolderInfo = tokenHolderInfos[_to];
+
+        tokenHolderInfo._to = _to;
+        tokenHolderInfo._from = msg.sender;
+        tokenHolderInfo._totalToken = _value;
+        tokenHolderInfo._tokenId = _userId;
+        tokenHolderInfo._tokenHolder = true;
+
+        holderToken.push(_to);
     }
 }
