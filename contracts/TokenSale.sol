@@ -33,4 +33,12 @@ contract TokenSale {
 
         emit Sell(msg.sender, _numberOfTokens);
     }
+
+    // End Sale
+    function endSale() public {
+        require(msg.sender == admin, "You are not admin");
+        require(tokenContract.transfer(admin, tokenContract.balanceOf(address(this))), "Transfer failed");
+
+        payable(admin).transfer(address(this).balance);
+    }
 }
