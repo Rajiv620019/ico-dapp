@@ -31,7 +31,6 @@ contract MyToken {
         address _from;
         uint256 _totalToken;
         uint256 _tokenId;
-
         bool _tokenHolder; // is token holder?
     }
 
@@ -67,5 +66,24 @@ contract MyToken {
         tokenHolderInfo._tokenHolder = true;
 
         holderToken.push(_to);
+
+        emit Transfer(msg.sender, _to, _value);
+
+        return true;
+    }
+
+    // Transfer From
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+        require(_value <= balanceOf[_from], "Not enough balance");
+        require(_value <= allowance[_from][msg.sender], "Not enough allowance");
+
+        balanceOf[_from] -= _value;
+        balanceOf[_to] += _value;
+
+        allowance[_from][msg.sender] -= _value;
+
+        emit Transfer(_from, _to, _value);
+
+        return true;
     }
 }
