@@ -87,8 +87,8 @@ contract MyToken {
         return true;
     }
 
-    // Get Token Holder
-    function getTokenHolder(address _address) public view returns (uint256 , address , address , uint256 , bool) {
+    // Get Token Holder Data
+    function getTokenHolderData(address _address) public view returns (uint256 , address , address , uint256 , bool) {
         return (
             tokenHolderInfos[_address]._tokenId,
             tokenHolderInfos[_address]._from,
@@ -96,7 +96,10 @@ contract MyToken {
             tokenHolderInfos[_address]._totalToken,
             tokenHolderInfos[_address]._tokenHolder
         );
+    } 
+
+    // Get Token Holder
+    function getTokenHolder() public view returns (address[] memory) {
+        return holderToken;
     }
-        
-    
 }
