@@ -27,7 +27,7 @@ contract TokenSale {
     function buyTokens(uint256 _numberOfTokens) public payable {
         require(msg.value == multiply(_numberOfTokens, tokenPrice), "Error value");
         require(tokenContract.balanceOf(address(this)) >= _numberOfTokens, "Error balance");
-        require(tokenContract.transfer(msg.sender, _numberOfTokens * 10000000000000000), "Error transfer");
+        require(tokenContract.transfer(msg.sender, _numberOfTokens * 1000000000000000000), "Error transfer");
 
         tokensSold += _numberOfTokens;
 

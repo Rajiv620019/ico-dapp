@@ -17,7 +17,7 @@ const token = (nToken) => {
 
   // Deploying the tokenSale contract
   async function main() {
-    const _tokenPrice = token(0.01);
+    const _tokenPrice = token(1);
 
     const TokenSale = await hre.ethers.getContractFactory("TokenSale");
 
