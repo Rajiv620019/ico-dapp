@@ -1,32 +1,31 @@
 const hre = require("hardhat");
 
 // Deploying the token contract
-const token = (nToken) => {
+const tokens = (nToken) => {
   return ethers.utils.parseUnits(nToken.toString(), "ether");
+};
 
-  async function main() {
-    const _initialSupply = token(500000000);
+async function main() {
+  const _initialSupply = tokens(500000000);
 
-    const Token = await hre.ethers.getContractFactory("Token");
+  const MyToken = await hre.ethers.getContractFactory("MyToken");
 
-    const token = await Token.deploy(_initialSupply);
+  const myToken = await MyToken.deploy(_initialSupply);
 
-    await token.deployed();
-    console.log(`Token deployed to: ${token.address}`);
-  }
+  await myToken.deployed();
+  console.log(`Token deployed to: ${myToken.address}`);
 
   // Deploying the tokenSale contract
-  async function main() {
-    const _tokenPrice = token(1);
 
-    const TokenSale = await hre.ethers.getContractFactory("TokenSale");
+  const _tokenPrice = tokens(1);
 
-    const tokenSale = await TokenSale.deploy(token.address, _tokenPrice);
+  const TokenSale = await hre.ethers.getContractFactory("TokenSale");
 
-    await tokenSale.deployed();
-    console.log(`TokenSale deployed to: ${tokenSale.address}`);
-  }
-};
+  const tokenSale = await TokenSale.deploy(myToken.address, _tokenPrice);
+
+  await tokenSale.deployed();
+  console.log(`TokenSale deployed to: ${tokenSale.address}`);
+}
 
 main().catch((error) => {
   console.error(error);
