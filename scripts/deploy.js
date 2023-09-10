@@ -2,7 +2,7 @@ const hre = require("hardhat");
 
 // Deploying the token contract
 const token = (nToken) => {
-  return ethers.utils.parsedUnits(nToken.toString(), "ether");
+  return ethers.utils.parseUnits(nToken.toString(), "ether");
 
   async function main() {
     const _initialSupply = token(500000000);
