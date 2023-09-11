@@ -55,6 +55,7 @@ contract MyToken {
         inc ();
 
         balanceOf[msg.sender] -= _value;
+        
         balanceOf[_to] += _value;
 
         TokenHolderInfo storage tokenHolderInfo = tokenHolderInfos[_to];

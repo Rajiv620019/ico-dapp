@@ -62,7 +62,68 @@ export const StateContextProvider = ({ children }) => {
         tokenHolder: tokenHolder.toNumber(),
       };
 
+      // Get token holders
+      const getTokenHolders = await my_token_contract.getTokenHolders(account);
+
+      // Get token holder data
+      if (account) {
+        const getTokenHolderData = await my_token_contract.getTokenHolderData(
+          account
+        );
+
+        const currentHolder = {
+          tokenId: getTokenHolderData[0].toNumber(),
+          from: getTokenHolderData[1],
+          to: getTokenHolderData[2],
+          totalToken: ethers.utils.formatEther(
+            getTokenHolderData[3].toString()
+          ),
+          tokenHolder: getTokenHolderData[4],
+        };
+
+        setCurrentHolder(currentHolder);
+      }
+
       setNativeToken(nativeToken);
+
+      // Token Sale Contract
+      const token_sale_contract = await connectingTokenSaleContract();
+
+      const tokenPrice = await token_sale_contract.tokenPrice();
+      const tokensSold = await token_sale_contract.tokensSold();
+      const tokenSaleBalance = await my_token_contract.balanceOf(
+        "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+      );
+
+      const tokenSale = {
+        tokenPrice: ethers.utils.formatEther(tokenPrice.toString()),
+        tokensSold: tokensSold.toNumber(),
+        tokenSaleBalance: ethers.utils.formatEther(tokenSaleBalance.toString()),
+      };
+
+      setTokenSale(tokenSale);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchInitialData();
+  }, []);
+
+  // Buy token
+  const buyToken = async (nToken) => {
+    try {
+      const amount = ethers.utils.parseUnits(nToken.toString(), "ether");
+      const contract = await connectingTokenSaleContract();
+
+      const buying = await contract.buyTokens(nToken, {
+        value: amount.toString(),
+      });
+
+      await buying.wait();
+      console.log(buying);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
