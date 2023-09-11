@@ -5,5 +5,5 @@ const index = () => {
   return <div>index</div>;
 };
 
-// Demo
+// Demo of how to use context
 export default index;
