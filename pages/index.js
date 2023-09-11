@@ -2,8 +2,8 @@ import React from "react";
 import { useStateContext } from "../Context/index";
 
 const index = () => {
-  return <div>index</div>;
+  const { Token_Ico } = useStateContext();
+  return <div>{Token_Ico}</div>;
 };
 
-// Demo of how to use context
 export default index;
