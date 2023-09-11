@@ -40,7 +40,7 @@ export const connectWallet = async () => {
   }
 };
 
-// Token contract
+// MyToken contract
 const fetchTokenContract = (signerOrProvider) =>
   new ethers.Contract(MY_TOKEN_ADDRESS, MY_TOKEN_ABI, signerOrProvider);
 
@@ -65,6 +65,23 @@ export const getBalance = async () => {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     return signer.getBalance();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Token Sale contract
+const fetchTokenSaleContract = (signerOrProvider) =>
+  new ethers.Contract(TOKEN_SALE_ADDRESS, TOKEN_SALE_ABI, signerOrProvider);
+
+export const connectingTokenSaleContract = async () => {
+  try {
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract = fetchTokenSaleContract(signer);
+    return contract;
   } catch (error) {
     console.log(error);
   }
