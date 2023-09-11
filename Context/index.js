@@ -29,6 +29,17 @@ export const StateContextProvider = ({ children }) => {
       const balance = await getBalance();
       setBalance(ethers.utils.formatEther(balance.toString()));
       setAddress(account);
+
+      // Get native token balance of connected wallet
+      const my_token_contract = await connectingTokenContract();
+
+      let tokenBalance;
+
+      if (account) {
+        tokenBalance = await my_token_contract.balanceOf(account);
+      } else {
+        tokenBalance = 0;
+      }
     } catch (error) {
       console.log(error);
     }
