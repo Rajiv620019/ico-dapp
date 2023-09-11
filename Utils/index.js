@@ -56,3 +56,16 @@ export const connectingTokenContract = async () => {
     console.log(error);
   }
 };
+
+// Get balance
+export const getBalance = async () => {
+  try {
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    return signer.getBalance();
+  } catch (error) {
+    console.log(error);
+  }
+};
