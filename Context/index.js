@@ -14,7 +14,7 @@ const StateContext = createContext();
 export const StateContextProvider = ({ children }) => {
   const [address, setAddress] = useState("");
   const [balance, setBalance] = useState("");
-  const [nativeTokenBalance, setNativeTokenBalance] = useState("");
+  const [nativeToken, setNativeToken] = useState("");
   const [tokenHolders, setTokenHolders] = useState([]);
   const [tokenSale, setTokenSale] = useState("");
   const [currentHolder, setCurrentHolder] = useState("");
@@ -47,9 +47,22 @@ export const StateContextProvider = ({ children }) => {
       const tokenTotalSupply = await my_token_contract.totalSupply();
       const tokenStandard = await my_token_contract.standard();
       const tokenHolder = await my_token_contract._userId();
-      const tokenOwnerOfContract =
-        await my_token_contract.tokenOwnerOfContract();
+      const tokenOwnerOfContract = await my_token_contract.ownerOfContract();
       const tokenAddress = await my_token_contract.address();
+
+      // Native token object
+      const nativeToken = {
+        tokenAddress: tokenAddress,
+        tokenName: tokenName,
+        tokenSymbol: tokenSymbol,
+        tokenOwnerOfContract: tokenOwnerOfContract,
+        tokenStandard: tokenStandard,
+        tokenTotalSupply: ethers.utils.formatEther(tokenTotalSupply.toString()),
+        tokenBalance: ethers.utils.formatEther(tokenBalance.toString()),
+        tokenHolder: tokenHolder.toNumber(),
+      };
+
+      setNativeToken(nativeToken);
     } catch (error) {
       console.log(error);
     }
