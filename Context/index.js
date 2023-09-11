@@ -40,6 +40,16 @@ export const StateContextProvider = ({ children }) => {
       } else {
         tokenBalance = 0;
       }
+
+      // Get all token infos
+      const tokenName = await my_token_contract.name();
+      const tokenSymbol = await my_token_contract.symbol();
+      const tokenTotalSupply = await my_token_contract.totalSupply();
+      const tokenStandard = await my_token_contract.standard();
+      const tokenHolder = await my_token_contract._userId();
+      const tokenOwnerOfContract =
+        await my_token_contract.tokenOwnerOfContract();
+      const tokenAddress = await my_token_contract.address();
     } catch (error) {
       console.log(error);
     }
