@@ -27,8 +27,7 @@ export const isWalletConnected = async () => {
 // Connect Wallet
 export const connectWallet = async () => {
   try {
-    if (!window.ethereum) return console.log("Wallet not found");
-
+    if (!window.ethereum) return console.log("Wallet not connected");
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
     });
@@ -36,6 +35,23 @@ export const connectWallet = async () => {
     const firstAccount = accounts[0];
     window.location.reload();
     return firstAccount;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Token contract
+const fetchTokenContract = (signerOrProvider) =>
+  new ethers.Contract(MY_TOKEN_ADDRESS, MY_TOKEN_ABI, signerOrProvider);
+
+export const connectingTokenContract = async () => {
+  try {
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract = fetchTokenContract(signer);
+    return contract;
   } catch (error) {
     console.log(error);
   }
