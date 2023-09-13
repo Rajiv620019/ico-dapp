@@ -103,7 +103,9 @@ export const StateContextProvider = ({ children }) => {
 
       setTokenSale(tokenSale);
 
-      console.log(nativeToken);
+      // console.log(tokenSale);
+      // console.log(currentHolder);
+      // console.log(nativeToken);
     } catch (error) {
       console.log(error);
     }
@@ -155,7 +157,21 @@ export const StateContextProvider = ({ children }) => {
 
   const Token_Ico = "Token Sale Dapp";
   return (
-    <StateContext.Provider value={{ Token_Ico }}>
+    <StateContext.Provider
+      value={{
+        transferNativeToken,
+        buyToken,
+        connectWallet,
+        setAddress,
+        Token_Ico,
+        currentHolder,
+        tokenSale,
+        tokenHolders,
+        nativeToken,
+        balance,
+        address,
+      }}
+    >
       {" "}
       {children}{" "}
     </StateContext.Provider>
