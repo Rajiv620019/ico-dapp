@@ -102,6 +102,8 @@ export const StateContextProvider = ({ children }) => {
       };
 
       setTokenSale(tokenSale);
+
+      console.log(nativeToken);
     } catch (error) {
       console.log(error);
     }
@@ -117,12 +119,34 @@ export const StateContextProvider = ({ children }) => {
       const amount = ethers.utils.parseUnits(nToken.toString(), "ether");
       const contract = await connectingTokenSaleContract();
 
-      const buying = await contract.buyTokens(nToken, {
+      const buying = await contract.buyToken(nToken, {
         value: amount.toString(),
       });
 
       await buying.wait();
       console.log(buying);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Transfer native token
+  const transferNativeToken = async () => {
+    try {
+      const Token_Sale_address = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+      const token_amount = 100000;
+      const tokens = token_amount.toString();
+      const transferAmount = ethers.utils.parseEther(tokens);
+
+      const contract = await connectingTokenContract();
+      const transaction = await contract.transfer(
+        Token_Sale_address,
+        transferAmount
+      );
+
+      console.log(transaction);
+      await transaction.wait();
       window.location.reload();
     } catch (error) {
       console.log(error);
