@@ -51,7 +51,12 @@ const Banner = ({ transferNativeToken }) => {
                     Buy Token Now! <BsArrowRight />
                   </a>
 
-                  {/* <a className="btn btn-border btn-radius">Transfer Token </a> */}
+                  <a
+                    className="btn btn-border btn-radius"
+                    onClick={() => transferNativeToken()}
+                  >
+                    Transfer Token{" "}
+                  </a>
                 </div>
                 <span
                   className="text-white icon-title animation"

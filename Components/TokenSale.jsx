@@ -141,6 +141,7 @@ const TokenSale = ({ buyToken, tokenSale }) => {
                   <span className="progress_max_val">Sale Goal</span>
                 </div>
                 <a
+                  onClick={() => buyToken(nToken)}
                   className="btn btn-default btn-radius animation"
                   data-animation="fadeInUp"
                   data-animation-delay="1.6s"
