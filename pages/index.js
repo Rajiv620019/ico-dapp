@@ -47,10 +47,10 @@ const index = () => {
       {/* <TimeLine /> */}
       <Distribution />
       <MobileApp />
-      <Team />
+      {/* <Team /> */}
       {/* <Client />
       <Blog /> */}
-      <Faq />
+      {/* <Faq /> */}
       <Contact />
       <Footer />
       {/* <ArrowUp /> */}
